@@ -9,14 +9,13 @@ import java.time.LocalDate;
 @Entity
 public class Student {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int sid;
     private String name;
     private String branch;
     private String email;
     private String phone;
     private LocalDate dob;
-
     private Integer marks;
     private Integer score;
 
