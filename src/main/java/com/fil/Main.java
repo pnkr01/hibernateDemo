@@ -13,18 +13,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
+//    public static Logger
     public static void main(String[] args) {
         EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory();
 
         em.getTransaction().begin();
 
-        Faculty faculty = new Faculty(1001,"Pawan","pawan@gmail.com",11,"CE dept");
-        Student student = new Student(1,"Pawan Singh","EE","p@gmail.com","6262626262", Date.valueOf("2024-01-03").toLocalDate(),300);
-        em.merge(faculty);
-        em.merge(student);
-        Query selectSFromFacultyS = em.createQuery("SELECT f FROM Faculty f");
-        List resultList = selectSFromFacultyS.getResultList();
-        resultList.forEach(System.out::println);
+        Person p1 = new Person(0,"Pawan");
+        em.persist(p1);
+        Consumer c = new Consumer(0,"Rahul","JSR",1.005);
+        em.persist(c);
+        EmployeeInh employeeInh = new EmployeeInh(0,"Ashutosh",125,"SDE");
+        em.persist(employeeInh);
+
+        Query query = em.createQuery("select p from Person p", Person.class);
+        List<Person> persons = query.getResultList();
+        persons.forEach(System.out::println);
+
+
+
+
+//        Faculty faculty = new Faculty(1001,"Pawan","pawan@gmail.com",11,"CE dept");
+//        Student student = new Student(1,"Pawan Singh","EE","p@gmail.com","6262626262", Date.valueOf("2024-01-03").toLocalDate(),300);
+//        em.merge(faculty);
+//        em.merge(student);
+//        Query selectSFromFacultyS = em.createQuery("SELECT f FROM Faculty f");
+//        List resultList = selectSFromFacultyS.getResultList();
+//        resultList.forEach(System.out::println);
         em.getTransaction().commit();
 //
 //        Project project = em.find(Project.class, 1);
