@@ -1,16 +1,91 @@
 package com.fil;
 import com.fil.dao.EmployeeDao;
+import com.fil.dao.EntityManagerFactoryProvider;
+import com.fil.dao.PackageDao;
 import com.fil.impl.EmployeeDaoImpl;
-import com.fil.model.Employee;
+import com.fil.impl.PackageDaoImpl;
+import com.fil.model.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory();
 
-        System.out.println("Project is running...");
+        em.getTransaction().begin();
+
+        Faculty faculty = new Faculty(1001,"Pawan","pawan@gmail.com",11,"CE dept");
+        Student student = new Student(1,"Pawan Singh","EE","p@gmail.com","6262626262", Date.valueOf("2024-01-03").toLocalDate(),300);
+        em.merge(faculty);
+        em.merge(student);
+        Query selectSFromFacultyS = em.createQuery("SELECT f FROM Faculty f");
+        List resultList = selectSFromFacultyS.getResultList();
+        resultList.forEach(System.out::println);
+        em.getTransaction().commit();
+//
+//        Project project = em.find(Project.class, 1);
+//        List<Employee> employeesWorkingOnThisProject = project.getEmployeesWorkingOnThisProject();
+//        Employee employee = new Employee("Pkkkk","oooo","2024-01-02","252525",415244,"M");
+//        employeesWorkingOnThisProject.add(employee);
+//        project.setEmployeesWorkingOnThisProject(employeesWorkingOnThisProject);
+//        em.merge(project);
+//        em.getTransaction().commit();
+
+
+
+//        Employee employee = em.find(Employee.class, "Pawan5c11da12");
+//        Employee employee1 = em.find(Employee.class, " Rahul Singh2024-01-02");
+//        employeesWorkingOnThisProject.add(employee);
+//        employeesWorkingOnThisProject.add(employee1);
+//        em.persist(project);
+//        System.out.println(employeesWorkingOnThisProject);
+//        System.out.println(project);
+
+//        Employee employee = em.find(Employee.class, "Pawan5c11da12");
+//        List<Project> projectList = employee.getProjectList();
+//        Project project = em.find(Project.class, 1);
+//        projectList.add(project);
+//        employee.setProjectList(projectList);
+//        em.persist(employee);
+
+
+//        System.out.println("Project is running...");
+//        List<Package> pkgdao =  new PackageDaoImpl().getPackage("New Delhi","Paris");
+//        System.out.println(pkgdao);
+
+//
+//        EmployeeDao employeeDao = new EmployeeDaoImpl();
+//        Employee employee = new Employee();
+//        employee.setDob("2024-01-02");
+//        employee.setGender("M");
+//        employee.setName("Rahul Singh");
+//        employee.setSalary(5000);
+//        Employee savedEmployee = employeeDao.save(employee);
+//        System.out.println(savedEmployee);
+//
+//
+//        em.getTransaction().begin();
+//        Parking parking = new Parking(0,1,1,1);
+//
+//        parking.setEmployee(employee);
+//        em.persist(parking);
+//        em.getTransaction().commit();
+
+//        Department hr = new Department("HR","Floor1");
+//        Department acc = new Department("ACC","Floor1");
+//        em.getTransaction().begin();
+//        em.persist(hr);
+//        em.persist(acc);
+//        em.getTransaction().commit();
+//        em.close();
 
 //        EmployeeDao employeeDao = new EmployeeDaoImpl();
 //        Employee employee = new Employee();
-//        employee.setAadhar("2024");
+//        employee.setDeptid("2024");
 //        employee.setDob("2024-01-02");
 //        employee.setGender("M");
 //        employee.setName("Rahul Singh");
@@ -45,6 +120,14 @@ public class Main {
 //            emf.close();
 //        }
 //    }
+
+
+
+
+
+
+
+
 //
 //    private static void insertThisProject(EntityManager em) {
 //        Project p1 = new Project(0,"Flipkart Coupons","Flipkart", Date.valueOf("2024-01-02"),Date.valueOf("2024-01-03"));

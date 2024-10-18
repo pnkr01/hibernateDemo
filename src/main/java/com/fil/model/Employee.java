@@ -2,10 +2,10 @@ package com.fil.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Employee {
@@ -19,10 +19,33 @@ public class Employee {
     private Integer salary;
     private String gender;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+////            @JoinTable(name="project_employee", joinColumns = @JoinCol)
+    @JoinTable(
+            name="project_employee",
+            joinColumns=
+            @JoinColumn(name="employeesWorkingOnThisProject_empid"),
+            inverseJoinColumns=
+            @JoinColumn(name="Project_id")
+    )
+    List<Project> projectList = new ArrayList<Project>();
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
+//    @ManyToOne
+//    @JoinColumn(name = "deptid")
+//    private Course course;
+
     public Employee(){}
 
 
-    Employee(String empid, String name, String dob, String aadhar, Integer salary, String gender) {
+    public Employee(String empid, String name, String dob, String aadhar, Integer salary, String gender) {
         this.empid = empid;
         this.name = name;
         this.dob = dob;
@@ -51,8 +74,8 @@ public class Employee {
         return aadhar;
     }
 
-    public void setAadhar(String aadhar) {
-        this.aadhar = aadhar;
+    public void setAadhar(String deptid) {
+        this.aadhar = deptid;
     }
 
     public String getDob() {
@@ -85,7 +108,7 @@ public class Employee {
                 "empid=" + empid +
                 ", name='" + name + '\'' +
                 ", dob='" + dob + '\'' +
-                ", aadhar='" + aadhar + '\'' +
+                ", deptid='" + aadhar + '\'' +
                 ", salary=" + salary +
                 ", gender='" + gender + '\'' +
                 '}';

@@ -1,10 +1,9 @@
 package com.fil.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -14,6 +13,17 @@ public class Project {
     private String title;
     private String client;
     private Date startDate,endDate;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    List<Employee> employeesWorkingOnThisProject = new ArrayList<>();
+
+    public List<Employee> getEmployeesWorkingOnThisProject() {
+        return employeesWorkingOnThisProject;
+    }
+
+    public void setEmployeesWorkingOnThisProject(List<Employee> employeesWorkingOnThisProject) {
+        this.employeesWorkingOnThisProject = employeesWorkingOnThisProject;
+    }
 
     public Project(int id, String title, String client, Date startDate, Date endDate) {
         this.id = id;
